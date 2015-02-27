@@ -210,6 +210,14 @@ footer p{
 	font-size: 178%;
 }
 
+#help span{
+	display: inline-block;
+	margin-left: 10px;
+	text-decoration: underline;
+	font-weight: 600;
+	cursor: pointer;
+}
+
 #game-time span{
 	font-size: 90%;	
 }

@@ -171,6 +171,22 @@ function gameInit() {
 	buildNumberCells();
 
 	makeMovable();
+
+	timerActive = false;
+
+	clearInterval(interval);
+
+	$('#timer').html('<p>Click on the cells near the empty...</p>');
+
+	$('#game-complete').css({
+		'opacity': '0',
+		'z-index': '0'
+	});
+
+	$('section').css({
+		'opacity': '100',
+		'zIndex': '100'
+	});
 }
 
 $(document).ready(function() {
@@ -195,19 +211,7 @@ $(document).ready(function() {
 		} return gameComplete();
 	});
 
-	$('#game-reload').on('click', function() {
+	$('#game-reload, #help span').on('click', function() {
 		gameInit();
-
-		$('#timer').html('<p>Click on the cells near the empty...</p>');
-
-		$('#game-complete').css({
-			'opacity': '0',
-			'z-index': '0'
-		});
-
-		$('section').css({
-			'opacity': '100',
-			'zIndex': '100'
-		});
 	});
 });
