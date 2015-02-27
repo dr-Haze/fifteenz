@@ -165,7 +165,7 @@ function gameComplete() {
 	timerActive = false;
 };
 
-function initGame() {
+function gameInit() {
 	shuffleNumbers();
 
 	buildNumberCells();
@@ -174,7 +174,7 @@ function initGame() {
 }
 
 $(document).ready(function() {
-	initGame();
+	gameInit();
 
 	$(document).on('click', '.movable', function() {
 		gameTimer();
@@ -196,7 +196,7 @@ $(document).ready(function() {
 	});
 
 	$('#game-reload').on('click', function() {
-		initGame();
+		gameInit();
 
 		$('#timer').html('<p>Click on the cells near the empty...</p>');
 
