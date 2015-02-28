@@ -15,10 +15,10 @@
 }
 
 *{
-	-webkit-transition: all ease-in-out 0.2s;
-       -moz-transition: all ease-in-out 0.2s;
-         -o-transition: all ease-in-out 0.2s;
-    	 	transition: all ease-in-out 0.2s;
+	-webkit-transition: all ease-in-out .2s;
+       -moz-transition: all ease-in-out .2s;
+         -o-transition: all ease-in-out .2s;
+    	 	transition: all ease-in-out .2s;
 
 	-moz-osx-font-smoothing: grayscale;
      -webkit-font-smoothing: antialiased;
@@ -59,13 +59,21 @@ header{
 header h1,
 #game-complete{
 	text-align: center;
-	text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
+	text-shadow: 3px 3px 5px rgba(0, 0, 0, .6);
 }
 
 header span{
 	font-size: 150%;
 	line-height: 100%;
 	text-transform: uppercase;
+}
+
+.game-number-inner,
+.parent-hover{
+	-webkit-transition: opacity ease-in-out .4s;
+       -moz-transition: opacity ease-in-out .4s;
+         -o-transition: opacity ease-in-out .4s;
+    	 	transition: opacity ease-in-out .4s;
 }
 
 section,
@@ -193,7 +201,7 @@ input[type="button"]#game-reload{
 	line-height: 1.55;
 	font-size: 60px;
 	text-align: center;
-	text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
+	text-shadow: 3px 3px 5px rgba(0, 0, 0, .6);
 }
 
 span#num-16{

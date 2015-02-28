@@ -1,8 +1,7 @@
 ;var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
 	 dataNumbers = [],
  	 dataCells = [],
- 	 timer = $('#timer'),
- 	 timeCounter, interval, sec, min, rSec, rMin,
+ 	 interval,  rSec, rMin,
  	 timerActive = false;
 
 function buildNumberCells() {
@@ -40,7 +39,8 @@ function changeCell(cell) {
 };
 
 function gameTimer() {
-	var timer = $('#timer'),
+	var sec, min, timeCounter,
+		timer = $('#timer'),
 		startTimeString = '<span>00</span><span id="blink">:</span><span>00</span>';
 
 	if (timerActive == false) {
@@ -62,58 +62,41 @@ function gameTimer() {
 			timer.html('<span>' + rMin.slice(- 2) + '</span><span id="blink" class="blink">:</span><span>' + rSec.slice(- 2) + '</span>');
 
 			if (min == 10) {
-				setTimeout(stopTimeCounter, 1000);
+			// if (sec == 3) {
+				setTimeout(function() {
+					clearInterval(interval);
+					clearTimeout(timeCounter);
+
+					$('#blink').removeClass('blink');
+
+					timerActive = true;
+
+					smoothTransition(timer, '<p>So slow... Click on <b>\'RELOAD\'</b> in the bottom.</p>');
+
+					$('.game-number').addClass('opacity-low cursor-low');
+					$('#help span').addClass('attention');
+
+					disableMovable();
+
+					setTimeout(function () {
+						$('#game-container').removeClass('no-image');
+					}, 200);
+				}, 1000);
 			};
 		}, 1000);
 
 		setTimeout(function() {
-			startTimeCounter();
+			var timeCounter = setTimeout(function() {
+					clearInterval(interval);
+				}, 600000);
+				// }, 3000);
 		}, 500);
 	};
 
 	timerActive = true;
 };
 
-function initTimeCounter() {
-	var timer = $('#timer'),
-		sec = min = rSec = rMin = 0;
-
-	clearInterval(interval);
-	timer.html('<span>' + rMin.slice(- 2) + '</span><span id="blink">:</span><span>00' + '</span>');
-};
-
-function startTimeCounter() { 
-	timeCounter = setTimeout(initTimeCounter, 600000);
-	// timeCounter = setTimeout(initTimeCounter, 3000);
-};
-
-function stopTimeCounter() {
-	var timer = $('#timer');
-
-	clearInterval(interval);
-	clearTimeout(timeCounter);
-
-	$('#blink').removeClass('blink');
-
-	timerActive = true;
-
-	$('#blink').removeClass('blink');
-
-	smoothTransition(timer, '<p>So slow... Click on <b>\'RELOAD\'</b> in the bottom.</p>');
-
-	$('.game-number').addClass('opacity-low cursor-low');
-	$('#help span').addClass('attention');
-
-	disableMovable();
-
-	setTimeout(function () {
-		$('#game-container').removeClass('no-image');
-	}, 200);
-};
-
 function gameComplete() {
-	var timer = $('#timer');
-
 	clearInterval(interval);
 
 	$('#blink').removeClass('blink');
@@ -209,23 +192,22 @@ function smoothTransition(element, markup) {
 
 	setTimeout(function () {
 		targetElement.removeClass('opacity-low').html(addedMarkup);
-	}, 350);
+	}, 200);
 };
 
 function gameInit() {
-	var timer = $('#timer');
+	clearInterval(interval);
 
+	timerActive = false;
+	
 	$('#game-container').addClass('no-image');
+
+	var timer = $('#timer');
+	smoothTransition(timer, '<p>Click on the cells near the empty...</p>');
 
 	shuffleNumbers();
 	buildNumberCells();
 	makeMovable();
-
-	timerActive = false;
-
-	clearInterval(interval);
-
-	smoothTransition(timer, '<p>Click on the cells near the empty...</p>');
 
 	$('.game-number').removeClass('empty-cell');
 	$('#game-complete').addClass('opacity-low z-index-low');
@@ -242,11 +224,12 @@ $(document).ready(function() {
 	$(document).on('click', '.movable', function() {
 		gameTimer();
 
-		var numberHolder = $(this).parent();
+		var numberHolder = $(this).parent(),
+			cellHolder = $(this).parent().parent();
 
 		$('.game-number').removeClass('empty-cell');
 
-		changeCell($(this).parent().parent().data('cell'));
+		changeCell(cellHolder.data('cell'));
 		disableMovable();
 		makeMovable();
 
