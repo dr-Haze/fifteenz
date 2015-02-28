@@ -1,32 +1,32 @@
 *, *:before, *:after {
   -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+	 -moz-box-sizing: border-box;
+		  box-sizing: border-box;
 }
 
 *:before,
 *:after{
-    content: " ";
-    display: table;
+	content: " ";
+	display: table;
 }
 
 *:after{
-    clear: both;
+	clear: both;
 }
 
 *{
 	-webkit-transition: all ease-in-out .2s;
-       -moz-transition: all ease-in-out .2s;
-         -o-transition: all ease-in-out .2s;
-    	 	transition: all ease-in-out .2s;
+	   -moz-transition: all ease-in-out .2s;
+		 -o-transition: all ease-in-out .2s;
+			transition: all ease-in-out .2s;
 
 	-moz-osx-font-smoothing: grayscale;
-     -webkit-font-smoothing: antialiased;
+	 -webkit-font-smoothing: antialiased;
 }
 
 html, body{
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 body, h1, p{
@@ -42,7 +42,7 @@ body{
 	color: #fff;
 	cursor: default;
 	min-height: 100%;
-    height: auto !important;
+	height: auto !important;
 
 	-webkit-user-select: none;
 	   -moz-user-select: none;
@@ -71,32 +71,32 @@ header span{
 .game-number-inner,
 .parent-hover{
 	-webkit-transition: opacity ease-in-out .4s;
-       -moz-transition: opacity ease-in-out .4s;
-         -o-transition: opacity ease-in-out .4s;
-    	 	transition: opacity ease-in-out .4s;
+	   -moz-transition: opacity ease-in-out .4s;
+		 -o-transition: opacity ease-in-out .4s;
+			transition: opacity ease-in-out .4s;
 }
 
 section,
 #game-container > div{
 	-webkit-transition: opacity ease-in-out 1s;
-       -moz-transition: opacity ease-in-out 1s;
-         -o-transition: opacity ease-in-out 1s;
-    	 	transition: opacity ease-in-out 1s;
+	   -moz-transition: opacity ease-in-out 1s;
+		 -o-transition: opacity ease-in-out 1s;
+			transition: opacity ease-in-out 1s;
 }
 
 #game-complete,
 #help{
 	-webkit-transition: opacity ease-in-out 1.2s;
-       -moz-transition: opacity ease-in-out 1.2s;
-         -o-transition: opacity ease-in-out 1.2s;
-    	 	transition: opacity ease-in-out 1.2s;
+	   -moz-transition: opacity ease-in-out 1.2s;
+		 -o-transition: opacity ease-in-out 1.2s;
+			transition: opacity ease-in-out 1.2s;
 }
 
 #game-container{
 		-webkit-transition: none;
-	       -moz-transition: none;
-	         -o-transition: none;
-	    	 	transition: none;
+		   -moz-transition: none;
+			 -o-transition: none;
+				transition: none;
 }
 
 section{

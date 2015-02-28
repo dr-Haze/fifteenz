@@ -25,17 +25,17 @@ function shuffleNumbers() {
 };
 
 function changeCell(cell) {
-    var emptyCell = $('#num-16').parent().parent(),
-    	clickCellInner = '#cell-' + cell + ' span',
-    	clickNumber = $(clickCellInner).data('number'),
-    	targetCell = '#cell-' + cell;
+	var emptyCell = $('#num-16').parent().parent(),
+		clickCellInner = '#cell-' + cell + ' span',
+		clickNumber = $(clickCellInner).data('number'),
+		targetCell = '#cell-' + cell;
 
-    $(clickCellInner).attr('id', 'num-' + clickNumber);
-    
-    $('#cell-a').append($(clickCellInner));
-    $('#cell-b').append($('#num-16'));
-    $(targetCell + ' .game-number-inner').append($('#cell-b span'));
-    emptyCell.find('.game-number-inner').append($('#cell-a span'));
+	$(clickCellInner).attr('id', 'num-' + clickNumber);
+
+	$('#cell-a').append($(clickCellInner));
+	$('#cell-b').append($('#num-16'));
+	$(targetCell + ' .game-number-inner').append($('#cell-b span'));
+	emptyCell.find('.game-number-inner').append($('#cell-a span'));
 };
 
 function gameTimer() {
