@@ -68,31 +68,37 @@ header span{
 	text-transform: uppercase;
 }
 
-section{
+section,
+#game-container > div{
 	-webkit-transition: opacity ease-in-out 1s;
        -moz-transition: opacity ease-in-out 1s;
          -o-transition: opacity ease-in-out 1s;
     	 	transition: opacity ease-in-out 1s;
 }
 
-#game-complete{
+#game-complete,
+#help{
 	-webkit-transition: opacity ease-in-out 1.2s;
        -moz-transition: opacity ease-in-out 1.2s;
          -o-transition: opacity ease-in-out 1.2s;
     	 	transition: opacity ease-in-out 1.2s;
 }
 
+#game-container{
+		-webkit-transition: none;
+	       -moz-transition: none;
+	         -o-transition: none;
+	    	 	transition: none;
+}
+
 section{
 	position: relative;
 	max-width: 400px;
 	width: 100%;
-	min-width: 320px;
 	height: auto;
 	margin: 0 auto 65px;
 	opacity: 1;
 	z-index: 100;
-
-
 }
 
 #game-complete{
@@ -101,15 +107,19 @@ section{
 	left: 0;
 	top: 25%;
 	padding: 40px 0;
-	opacity: 0;
+	opacity: 1;
 	background-color: #626262;
 	text-transform: uppercase;
-	z-index: 0;
+	z-index: 100;
 }
 
 #game-greetings{
 	font-size: 300%;
 	line-height: 1.8;
+}
+
+#game-greetings br{
+	display: none;
 }
 
 #game-time{
@@ -119,6 +129,7 @@ section{
 input[type="button"]#game-reload{
 	margin-top: 20px;
 	padding: 5px 10px;
+	cursor: progress;
 }
 
 #game-greetings,
@@ -136,14 +147,26 @@ input[type="button"]#game-reload{
 	width: 100%;
 	height: 400px;
 	font-size: 0;
+	background-image: url('time-is-up.png');
+	background-size: 70%;
+	background-position: 70% center;
+	background-repeat: no-repeat;
+	background-color: #626262;
+}
+
+#game-container.no-image{
+	background: none;
 	background-color: #626262;
 }
 
 .game-number{
 	display: inline-block;
+	position: relative;
 	width: 25%;
 	height: 25%;
 	padding: 1px;
+	opacity: 1;
+	cursor: not-allowed;
 }
 
 .game-number-inner{
@@ -153,6 +176,7 @@ input[type="button"]#game-reload{
 	overflow: hidden;
 	font-size: 140%;
 	background-color: #7d7d7d;
+	cursor: not-allowed;
 }
 
 .parent-hover{
@@ -160,7 +184,7 @@ input[type="button"]#game-reload{
 }
 
 .parent-hover:hover{
-	background-color: #949494;
+	background-color: #454545;
 }
 
 .game-number-inner span{
@@ -175,7 +199,9 @@ input[type="button"]#game-reload{
 span#num-16{
 	color: transparent;
 	text-shadow: none;
-	background-color: #626262;
+	background-color: transparent;
+	opacity: 0;
+	cursor: default;
 }
 
 #timer{
@@ -195,7 +221,11 @@ footer p{
 }
 
 #timer p{
-	font-size: 140%;
+	font-size: 130%;
+}
+
+#timer b{
+	display: inline-block;
 }
 
 #timer span,
@@ -215,7 +245,16 @@ footer p{
 	margin-left: 10px;
 	text-decoration: underline;
 	font-weight: 600;
-	cursor: pointer;
+	cursor: progress;
+}
+
+#help span:hover{
+	text-shadow: 0px 1px 10px rgba(40, 40, 40, 1);
+}
+
+#help span:active,
+#help span:focus{
+	text-shadow: 0px 1px 10px rgba(10, 10, 10, 1);
 }
 
 #game-time span{
@@ -256,4 +295,77 @@ footer{
 	width: 100%;
 	padding: 10px 0;
 	background-color: #000;
+}
+
+@media (max-width: 400px){
+	#game-greetings br{
+		display: block;
+	}
+}
+
+@media (max-width: 400px){
+	body{
+		font-size: 80%;
+	}
+
+	section{
+		max-width: 320px;
+	}
+
+	#game-container{
+		height: 320px;
+	}
+
+	#game-greetings{
+		font-size: 250%;
+	}
+}
+
+.hide{
+	display: none !important;
+}
+
+.opacity-low{
+	opacity: 0 !important;
+}
+
+.z-index-low{
+	z-index: 0 !important;
+}
+
+.cursor-low,
+.game-number.target-cell.empty-cell.opacity-low.cursor-low,
+.game-number.target-cell.empty-cell.opacity-low.cursor-low .game-number-inner,
+.game-number.target-cell.empty-cell.opacity-low.cursor-low .game-number-inner span{
+	cursor: not-allowed !important;
+}
+
+.empty-cell{
+	cursor: default !important;
+}
+
+.empty-cell .game-number-inner{
+	border: 2px solid transparent;
+	background-color: #626262;
+	font-size: 0;
+	opacity: 0;
+	cursor: default;
+}
+
+.target-cell{
+	cursor: pointer !important;
+}
+
+.attention{
+	color: #fff;
+	text-shadow: 3px 3px 5px rgba(255, 114, 5, 1), 0px 1px 11px rgba(0, 0, 0, 1);
+}
+
+#help span.attention:hover{
+	text-shadow: 3px 3px 5px rgba(255, 114, 5, 1), 0px 1px 17px rgba(40, 40, 40, 1);
+}
+
+#help span.attention:active,
+#help span.attention:focus{
+	text-shadow: 3px 3px 5px rgba(255, 114, 5, 1), 0px 1px 13px rgba(10, 10, 10, 1);
 }

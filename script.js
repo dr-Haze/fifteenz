@@ -1,7 +1,8 @@
 ;var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
 	 dataNumbers = [],
  	 dataCells = [],
- 	 interval, sec, min, rSec, rMin,
+ 	 timer = $('#timer'),
+ 	 timeCounter, interval, sec, min, rSec, rMin,
  	 timerActive = false;
 
 function buildNumberCells() {
@@ -29,13 +30,103 @@ function changeCell(cell) {
     	clickCellInner = '#cell-' + cell + ' span',
     	clickNumber = $(clickCellInner).data('number'),
     	targetCell = '#cell-' + cell;
-    
+
     $(clickCellInner).attr('id', 'num-' + clickNumber);
     
     $('#cell-a').append($(clickCellInner));
     $('#cell-b').append($('#num-16'));
     $(targetCell + ' .game-number-inner').append($('#cell-b span'));
     emptyCell.find('.game-number-inner').append($('#cell-a span'));
+};
+
+function gameTimer() {
+	var timer = $('#timer'),
+		startTimeString = '<span>00</span><span id="blink">:</span><span>00</span>';
+
+	if (timerActive == false) {
+		smoothTransition(timer, startTimeString);
+
+		sec = min = rSec = rMin = 0;
+
+		interval = setInterval(function () {
+			sec ++;
+
+			if (sec == 60) {
+				min ++;
+				sec = 0;
+			};
+
+			rSec = '0' + sec;
+			rMin = '0' + min;
+
+			timer.html('<span>' + rMin.slice(- 2) + '</span><span id="blink" class="blink">:</span><span>' + rSec.slice(- 2) + '</span>');
+
+			if (sec == 3) {
+				setTimeout(stopTimeCounter, 1000);
+			};
+		}, 1000);
+
+		setTimeout(function() {
+			startTimeCounter();
+		}, 500);
+	};
+
+	timerActive = true;
+};
+
+function initTimeCounter() {
+	var timer = $('#timer'),
+		sec = min = rSec = rMin = 0;
+
+	clearInterval(interval);
+	timer.html('<span>' + rMin.slice(- 2) + '</span><span id="blink">:</span><span>00' + '</span>');
+};
+
+function startTimeCounter() { 
+	// timeCounter = setTimeout(initTimeCounter, 600000);
+	timeCounter = setTimeout(initTimeCounter, 3000);
+};
+
+function stopTimeCounter() {
+	var timer = $('#timer');
+
+	clearInterval(interval);
+	clearTimeout(timeCounter);
+
+	$('#blink').removeClass('blink');
+
+	timerActive = true;
+
+	$('#blink').removeClass('blink');
+
+	smoothTransition(timer, '<p>So slow... Click on <b>\'RELOAD\'</b> in the bottom.</p>');
+
+	$('.game-number').addClass('opacity-low cursor-low');
+	$('#help span').addClass('attention');
+
+	disableMovable();
+
+	setTimeout(function () {
+		$('#game-container').removeClass('no-image');
+	}, 200);
+};
+
+function gameComplete() {
+	var timer = $('#timer');
+
+	clearInterval(interval);
+
+	$('#blink').removeClass('blink');
+	$('section').addClass('opacity-low z-index-low');
+	$('#game-complete').removeClass('opacity-low z-index-low');
+
+	if (rMin + rSec == '00') {
+		$('#game-time span').html('00:00');
+	} else {
+		$('#game-time span').html(rMin.slice(- 2) + ':' + rSec.slice(- 2));
+	};
+
+	timerActive = false;
 };
 
 function makeMovable() {
@@ -110,84 +201,40 @@ function disableMovable() {
 	};
 };
 
-function gameTimer() {
-	var timer = $('#timer');
+function smoothTransition(element, markup) {
+	var targetElement = element,
+		addedMarkup = markup;
 
-	if (timerActive === false) {
-		timer.html('<span>00</span><span id="blink" class="blink">:</span><span>00</span>');
+	targetElement.addClass('opacity-low');
 
-		sec = min = rSec = rMin = 0;
-
-		interval = setInterval(function () {
-			sec ++;
-
-			if (sec == 60) {
-				min ++;
-				sec = 0;
-			};
-
-			rSec = '0' + sec;
-			rMin = '0' + min;
-
-			timer.html('<span>' + rMin.slice(- 2) + '</span><span id="blink" class="blink">:</span><span>' + rSec.slice(- 2) + '</span>');
-		}, 1000);
-
-		setTimeout(function () {
-			clearInterval(interval);
-			timer.html('<span>' + rMin.slice(- 2) + '</span><span id="blink" class="blink">:</span><span>00' + '</span>');
-		}, 1800000);
-	};
-
-	timerActive = true;
-};
-
-function gameComplete() {
-	clearInterval(interval);
-
-	$('#blink').removeClass('blink');
-
-	$('section').css({
-		'opacity': '0',
-		'zIndex': '0'
-	});
-
-	$('#game-complete').css({
-		'opacity': '100',
-		'z-index': '100'
-	});
-
-	if (rMin + rSec == '00') {
-		$('#game-time span').html('00:00');
-	} else {
-		$('#game-time span').html(rMin.slice(- 2) + ':' + rSec.slice(- 2));
-	};
-
-	timerActive = false;
+	setTimeout(function () {
+		targetElement.removeClass('opacity-low').html(addedMarkup);
+	}, 350);
 };
 
 function gameInit() {
+	var timer = $('#timer');
+
+	$('#game-container').addClass('no-image');
+
 	shuffleNumbers();
-
 	buildNumberCells();
-
 	makeMovable();
 
 	timerActive = false;
 
 	clearInterval(interval);
 
-	$('#timer').html('<p>Click on the cells near the empty...</p>');
+	smoothTransition(timer, '<p>Click on the cells near the empty...</p>');
 
-	$('#game-complete').css({
-		'opacity': '0',
-		'z-index': '0'
-	});
-
-	$('section').css({
-		'opacity': '100',
-		'zIndex': '100'
-	});
-}
+	$('.game-number').removeClass('empty-cell');
+	$('#game-complete').addClass('opacity-low z-index-low');
+	$('section').removeClass('opacity-low z-index-low');
+	$('.game-number').removeClass('opacity-low cursor-low');
+	$('#help span').removeClass('attention');
+	$('#num-16').parent().parent().addClass('empty-cell');
+	$('.movable').parent().parent().addClass('target-cell');
+};
 
 $(document).ready(function() {
 	gameInit();
@@ -195,11 +242,17 @@ $(document).ready(function() {
 	$(document).on('click', '.movable', function() {
 		gameTimer();
 
-		changeCell($(this).parent().parent().data('cell'));
+		var numberHolder = $(this).parent();
 
+		$('.game-number').removeClass('empty-cell');
+
+		changeCell($(this).parent().parent().data('cell'));
 		disableMovable();
-		
 		makeMovable();
+
+		smoothTransition(numberHolder);
+
+		$('#num-16').parent().parent().addClass('empty-cell');
 
 		for (var i = 1; i <= 16; i ++) {
 			dataCells[i - 1] = $('#cell-' + i).data('cell');
