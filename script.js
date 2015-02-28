@@ -61,7 +61,7 @@ function gameTimer() {
 
 			timer.html('<span>' + rMin.slice(- 2) + '</span><span id="blink" class="blink">:</span><span>' + rSec.slice(- 2) + '</span>');
 
-			if (sec == 3) {
+			if (min == 10) {
 				setTimeout(stopTimeCounter, 1000);
 			};
 		}, 1000);
@@ -83,8 +83,8 @@ function initTimeCounter() {
 };
 
 function startTimeCounter() { 
-	// timeCounter = setTimeout(initTimeCounter, 600000);
-	timeCounter = setTimeout(initTimeCounter, 3000);
+	timeCounter = setTimeout(initTimeCounter, 600000);
+	// timeCounter = setTimeout(initTimeCounter, 3000);
 };
 
 function stopTimeCounter() {
