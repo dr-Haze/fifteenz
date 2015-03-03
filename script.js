@@ -1,7 +1,7 @@
 ;var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
 	 dataNumbers = [],
  	 dataCells = [],
- 	 interval,  rSec, rMin,
+ 	 interval, rSec, rMin,
  	 timerActive = false;
 
 function buildNumberCells() {
@@ -41,6 +41,7 @@ function changeCell(cell) {
 function gameTimer() {
 	var sec, min, timeCounter,
 		timer = $('#timer'),
+		// startTimeString = '<span id="min">00</span><span id="blink">:</span><span id="sec">00</span>';
 		startTimeString = '<span>00</span><span id="blink">:</span><span>00</span>';
 
 	if (timerActive == false) {
@@ -60,6 +61,9 @@ function gameTimer() {
 			rMin = '0' + min;
 
 			timer.html('<span>' + rMin.slice(- 2) + '</span><span id="blink" class="blink">:</span><span>' + rSec.slice(- 2) + '</span>');
+			// $('#blink').addClass('blink');
+			// $('#min').html(rMin.slice(- 2));
+			// $('#sec').html(rSec.slice(- 2));
 
 			if (min == 10) {
 			// if (sec == 3) {
@@ -113,69 +117,9 @@ function gameComplete() {
 };
 
 function makeMovable() {
-	if ($('#num-16').parent().parent().attr('id') === 'cell-1') {
-		$('#cell-2 span, #cell-5 span').addClass('movable').parent().addClass('parent-hover');
-	};
+	var cellIndex = $('#num-16').parent().parent().data('cell');
 
-	if ($('#num-16').parent().parent().attr('id') === 'cell-2') {
-		$('#cell-1 span, #cell-3 span, #cell-6 span').addClass('movable').parent().addClass('parent-hover');
-	};
-
-	if ($('#num-16').parent().parent().attr('id') === 'cell-3') {
-		$('#cell-2 span, #cell-4 span, #cell-7 span').addClass('movable').parent().addClass('parent-hover');
-	};
-
-	if ($('#num-16').parent().parent().attr('id') === 'cell-4') {
-		$('#cell-3 span, #cell-8 span').addClass('movable').parent().addClass('parent-hover');
-	};
-
-	if ($('#num-16').parent().parent().attr('id') === 'cell-5') {
-		$('#cell-1 span, #cell-6 span, #cell-9 span').addClass('movable').parent().addClass('parent-hover');
-	};
-
-	if ($('#num-16').parent().parent().attr('id') === 'cell-6') {
-		$('#cell-2 span, #cell-5 span, #cell-7 span, #cell-10 span').addClass('movable').parent().addClass('parent-hover');
-	};
-
-	if ($('#num-16').parent().parent().attr('id') === 'cell-7') {
-		$('#cell-3 span, #cell-6 span, #cell-8 span, #cell-11 span').addClass('movable').parent().addClass('parent-hover');
-	};
-
-	if ($('#num-16').parent().parent().attr('id') === 'cell-8') {
-		$('#cell-4 span, #cell-7 span, #cell-12 span').addClass('movable').parent().addClass('parent-hover');
-	};
-
-	if ($('#num-16').parent().parent().attr('id') === 'cell-9') {
-		$('#cell-5 span, #cell-10 span, #cell-13 span').addClass('movable').parent().addClass('parent-hover');
-	};
-
-	if ($('#num-16').parent().parent().attr('id') === 'cell-10') {
-		$('#cell-6 span, #cell-9 span, #cell-11 span, #cell-14 span').addClass('movable').parent().addClass('parent-hover');
-	};
-
-	if ($('#num-16').parent().parent().attr('id') === 'cell-11') {
-		$('#cell-7 span, #cell-10 span, #cell-12 span, #cell-15 span').addClass('movable').parent().addClass('parent-hover');
-	};
-
-	if ($('#num-16').parent().parent().attr('id') === 'cell-12') {
-		$('#cell-8 span, #cell-11 span, #cell-16 span').addClass('movable').parent().addClass('parent-hover');
-	};
-
-	if ($('#num-16').parent().parent().attr('id') === 'cell-13') {
-		$('#cell-9 span, #cell-14 span').addClass('movable').parent().addClass('parent-hover');
-	};
-
-	if ($('#num-16').parent().parent().attr('id') === 'cell-14') {
-		$('#cell-10 span, #cell-13 span, #cell-15 span').addClass('movable').parent().addClass('parent-hover');
-	};
-
-	if ($('#num-16').parent().parent().attr('id') === 'cell-15') {
-		$('#cell-11 span, #cell-14 span, #cell-16 span').addClass('movable').parent().addClass('parent-hover');
-	};
-
-	if ($('#num-16').parent().parent().attr('id') === 'cell-16') {
-		$('#cell-12 span, #cell-15 span').addClass('movable').parent().addClass('parent-hover');
-	};
+	$('#cell-' + (cellIndex - 4) + ' span, #cell-' + (cellIndex - 1) + ' span, #cell-' + (cellIndex + 1) + ' span, #cell-' + (cellIndex + 4) + ' span').addClass('movable').parent().addClass('parent-hover');
 };
 
 function disableMovable() {
@@ -209,10 +153,9 @@ function gameInit() {
 	buildNumberCells();
 	makeMovable();
 
-	$('.game-number').removeClass('empty-cell');
+	$('.game-number').removeClass('opacity-low cursor-low empty-cell');
 	$('#game-complete').addClass('opacity-low z-index-low');
 	$('section').removeClass('opacity-low z-index-low');
-	$('.game-number').removeClass('opacity-low cursor-low');
 	$('#help span').removeClass('attention');
 	$('#num-16').parent().parent().addClass('empty-cell');
 	$('.movable').parent().parent().addClass('target-cell');
@@ -220,6 +163,22 @@ function gameInit() {
 
 $(document).ready(function() {
 	gameInit();
+
+	// var arrayRow,
+	// 	checkSum = 0,
+	// 	cellHolderNumber = $('#num-16').parent().parent().data('cell');
+
+	// if (cellHolderNumber <= 4) {
+	// 	arrayRow = 1;
+	// } else if (cellHolderNumber <= 8) {
+	// 	arrayRow = 2;
+	// } else if (cellHolderNumber <= 12) {
+	// 	arrayRow = 3;
+	// } else {
+	// 	arrayRow = 4;
+	// };
+
+	// console.log(arrayRow);
 
 	$(document).on('click', '.movable', function() {
 		gameTimer();
