@@ -11,17 +11,41 @@ function buildNumberCells() {
 };
 
 function shuffleNumbers() {
-	var arrayLength = numbers.length,
-		temporary,
-		index;
+	var valid = false;
 
-	while (arrayLength > 0) {
-		index = Math.floor(Math.random() * arrayLength);
-		arrayLength --;
-		temporary = numbers[arrayLength];
-		numbers[arrayLength] = numbers[index];
-		numbers[index] = temporary;
-	} return numbers;
+	while (!valid) {
+		var arrayLength = numbers.length,
+			temporary,
+			index,
+			i, j,
+			result = 0;
+
+		while (arrayLength > 0) {
+			index = Math.floor(Math.random() * arrayLength);
+			arrayLength --;
+			temporary = numbers[arrayLength];
+			numbers[arrayLength] = numbers[index];
+			numbers[index] = temporary;
+		};
+
+		arrayLength = numbers.length;
+
+		for (i = 0; i < arrayLength; i ++) {
+			for (j = i + 1; j < arrayLength; j ++) {
+				if (numbers[i] > numbers[j]) {
+					result ++;
+				};
+			};
+		};
+
+		console.log(numbers);
+		console.log(result);
+
+		if (result % 2 === 0) {
+			valid = true;
+			return numbers;
+		};
+	};
 };
 
 function changeCell(cell) {
@@ -147,6 +171,7 @@ function gameInit() {
 	$('#game-container').addClass('no-image');
 
 	var timer = $('#timer');
+
 	smoothTransition(timer, '<p>Click on the cells near the empty...</p>');
 
 	shuffleNumbers();
@@ -163,22 +188,6 @@ function gameInit() {
 
 $(document).ready(function() {
 	gameInit();
-
-	// var arrayRow,
-	// 	checkSum = 0,
-	// 	cellHolderNumber = $('#num-16').parent().parent().data('cell');
-
-	// if (cellHolderNumber <= 4) {
-	// 	arrayRow = 1;
-	// } else if (cellHolderNumber <= 8) {
-	// 	arrayRow = 2;
-	// } else if (cellHolderNumber <= 12) {
-	// 	arrayRow = 3;
-	// } else {
-	// 	arrayRow = 4;
-	// };
-
-	// console.log(arrayRow);
 
 	$(document).on('click', '.movable', function() {
 		gameTimer();
