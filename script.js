@@ -2,6 +2,7 @@
 	 dataNumbers = [],
  	 dataCells = [],
  	 interval, rSec, rMin,
+ 	 emptyCellDataGlobal = buildNumberCells();
  	 timerActive = false;
 
 function buildNumberCells() {
@@ -17,7 +18,7 @@ function shuffleNumbers() {
 		var arrayLength = numbers.length,
 			temporary,
 			index,
-			i, j,
+			i, j, emptyIndex, emptyCellRow,
 			result = 0;
 
 		while (arrayLength > 0) {
@@ -31,6 +32,18 @@ function shuffleNumbers() {
 		arrayLength = numbers.length;
 
 		for (i = 0; i < arrayLength; i ++) {
+			emptyIndex = numbers.indexOf(16) + 1;
+
+			if (emptyIndex <= 4) {
+				emptyCellRow = 1;
+			} else if (emptyIndex <= 8) {
+				emptyCellRow = 2;
+			} else if (emptyIndex <= 12) {
+				emptyCellRow = 3;
+			} else {
+				emptyCellRow = 4;
+			};
+
 			for (j = i + 1; j < arrayLength; j ++) {
 				if (numbers[i] > numbers[j]) {
 					result ++;
@@ -38,8 +51,13 @@ function shuffleNumbers() {
 			};
 		};
 
-		console.log(numbers);
 		console.log(result);
+		console.log(emptyCellRow);
+
+		result += emptyCellRow;
+
+		console.log(result);
+		console.log(numbers);
 
 		if (result % 2 === 0) {
 			valid = true;
